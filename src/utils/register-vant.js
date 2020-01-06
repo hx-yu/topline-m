@@ -4,9 +4,15 @@ import Vue from 'vue'
 import {
   Button,
   Cell,
-  CellGroup
+  CellGroup,
+  NavBar,
+  Field,
+  Toast
 } from 'vant'
 // 全剧注册组件
 Vue.use(Button)
   .use(Cell)
   .use(CellGroup)
+  .use(NavBar)
+  .use(Field)
+  .use(Toast)
