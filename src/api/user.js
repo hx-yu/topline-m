@@ -9,3 +9,11 @@ export const login = data => {
     data
   })
 }
+
+// 发送验证码
+export const getCode = mobile => {
+  return request({
+    url: `/sms/codes/${mobile}`,
+    method: 'GET'
+  })
+}
