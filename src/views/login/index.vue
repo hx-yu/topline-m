@@ -83,7 +83,8 @@ export default {
       try {
         const result = await login(data)
         this.$toast.success('登陆成功')
-        this.store.commit('setUser', result.data.data)
+        this.$store.commit('setUser', result.data.data)
+        this.$router.push('/')
       } catch (error) {
         this.$toast.fail('登陆失败')
       }

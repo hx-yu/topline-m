@@ -4,7 +4,7 @@ import jsonBig from 'json-bigint'
 import store from '@/store'
 // 配置基地址
 const request = axios.create({
-  baseURL: 'http://ttapi.research.itcast.cn/app/v1_0'
+  baseURL: 'http://ttapi.research.itcast.cn'
 })
 // 处理响应数据大数字精度问题
 request.defaults.transformResponse = [data => {
@@ -17,7 +17,7 @@ request.defaults.transformResponse = [data => {
 // 设置请求拦截
 // 处理token
 request.interceptors.request.use(config => {
-  const { user } = store.state
+  const user = store.state.user
   if (user) {
     config.headers.Authorization = `Bearer ${user.token}`
   }
@@ -26,9 +26,9 @@ request.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 // 设置响应拦截
-request.interceptors.response.use(response => {
-  console.log(response)
-}, error => {
-  console.log(error)
+request.interceptors.response.use(function (response) {
+  return response
+}, function (error) {
+  return Promise.reject(error)
 })
 export default request
