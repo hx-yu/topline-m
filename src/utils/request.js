@@ -14,6 +14,12 @@ request.defaults.transformResponse = [data => {
   }
 }]
 // 设置请求拦截
+// 处理token
+request.interceptors.request.use(config => {
+  return config
+}, error => {
+  return Promise.reject(error)
+})
 // 设置响应拦截
 
 export default request

@@ -63,7 +63,6 @@ export default {
     async userLogin () {
       // 1、获取表单数据
       const data = this.user
-
       // 2、表单校验
       const success = await this.$refs.myform.validate()
       // 验证不通过
@@ -75,21 +74,18 @@ export default {
         }, 100)
         return
       }
-
       this.$toast.loading({
         duration: 0, // 持续展示 toast
         message: '登录中...',
         forbidClick: true // 是否禁止背景点击
       })
-
       // 3、请求提交
       try {
-        const res = await login(data)
+        const result = await login(data)
         this.$toast.success('登陆成功')
-        console.log(res)
+        this.store.commit('setUser', result.data.data)
       } catch (error) {
         this.$toast.fail('登陆失败')
-        console.log(error)
       }
     },
     // 获取验证码
@@ -100,13 +96,11 @@ export default {
       const validateResult = await validate(mobile, 'required|mobile', {
         name: '手机号'
       })
-
       // 如果验证失败，提示错误消息，停止发送验证码
       if (!validateResult.valid) {
         this.$toast(validateResult.errors[0])
         return
       }
-
       // 3、发送验证码
       try {
         await getCode(mobile)
