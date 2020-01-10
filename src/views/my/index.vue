@@ -28,7 +28,7 @@
     </div>
     <!-- 未登录状态 -->
     <div v-else class="no_login" @click="login">
-      <van-image round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <img src="../../assets/img/mobile.png" />
       <span>点击登录</span>
     </div>
     <!-- 收藏系列 -->
@@ -58,7 +58,7 @@ export default {
   name: 'My',
   data () {
     return {
-      user: null
+      user: {}
     }
   },
   methods: {
@@ -100,14 +100,16 @@ export default {
     padding: 55px 20px 0 20px;
     .info {
       display: flex;
-      align-content: center;
+      justify-content: center;
+      align-items: center;
       .van-image {
         width: 75px;
         height: 75px;
         border-radius: 50%;
       }
       span {
-        margin: 15px;
+        font-size: 16px;
+        color: #ffffff;
       }
       .van-button {
         margin-top: 10px;
@@ -116,8 +118,12 @@ export default {
     }
     .van-grid {
       margin-top: 30px;
+      display: flex;
+      flex-wrap: nowrap;
       ::v-deep .van-grid-item__content {
         background: none;
+        color: #ffffff;
+        font-size: 16px;
       }
     }
   }
@@ -126,13 +132,19 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 200px;
+    height: 140px;
     background: url("../../assets/img/banner.png");
     background-size: cover;
     padding: 55px 20px 0 20px;
-    .van-image {
+    img {
       width: 75px;
       height: 75px;
+      border-radius: 50%;
+      margin-bottom: 5px;
+    }
+    span{
+      color: #ffffff;
+      font-size: 16px;
     }
   }
   .collect {
