@@ -1,7 +1,7 @@
 <template>
   <div class="home_container">
     <!-- 导航 -->
-    <van-nav-bar>
+    <van-nav-bar fixed>
       <img src="../../assets/img/logo-light.png" slot="left" />
       <van-icon name="search" slot="right" />
     </van-nav-bar>
@@ -43,6 +43,8 @@ export default {
 
 <style scoped lang="less">
 .home_container {
+  padding-top: 90px;
+  padding-bottom: 50px;
   .van-nav-bar {
     height: 46px;
     background-color: #3196fa;
@@ -56,6 +58,13 @@ export default {
     .van-icon {
       color: #ffffff;
     }
+  }
+  ::v-deep .van-tabs__wrap{
+    position: fixed;
+    top: 46px;
+    left:0;
+    right: 0;
+    z-index: 1;
   }
 }
 </style>

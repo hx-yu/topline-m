@@ -32,9 +32,7 @@ export default {
   methods: {
     async onLoad () {
       // 1、获取数据
-      const {
-        data
-      } = await getArticles({
+      const { data } = await getArticles({
         channel_id: this.channel.id,
         timestamp: this.timestamp || Date.now(),
         with_top: 1
@@ -54,11 +52,20 @@ export default {
       }
     },
     // 下拉刷新列表
-    onRefresh () {
-      setTimeout(() => {
-        this.$toast('刷新成功')
-        this.isLoading = false
-      }, 500)
+    async onRefresh () {
+      // 1、获取数据
+      const { data } = await getArticles({
+        channel_id: this.channel.id,
+        timestamp: Date.now(),
+        with_top: 1
+      })
+      // 2、数据加载到最前端
+      const results = data.data.results
+      this.list.unshift(...results)
+      // 3、结束加载
+      this.isLoading = false
+      // 4、提示加载成功
+      this.$toast(`成功加载了${results.length}条数据`)
     }
   }
 }
