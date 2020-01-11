@@ -7,20 +7,40 @@
     </van-nav-bar>
     <!-- 频道列表 -->
     <van-tabs v-model="active">
+      <van-icon @click="isPopupShow=true" slot="nav-right" name="wap-nav"/>
       <van-tab v-for="item in list" :key="item.id" :title="item.name">
         <Articleslist :channel="item"></Articleslist>
       </van-tab>
     </van-tabs>
+    <!-- 下弹框 -->
+    <van-popup
+      v-model="isPopupShow"
+      close-icon-position="top-left"
+      closeable
+      round
+      position="bottom"
+      :style="{ height: '95%' }"
+    >
+      <Channeledit
+        v-model="active"
+        :userChannels="list"
+        @close="isPopupShow=false"
+      ></Channeledit>
+    </van-popup>
   </div>
 </template>
 
 <script>
+
 import Articleslist from '../../components/articlelist'
+import Channeledit from '../../components/channeledit'
 import { getChannels } from '@/api/articles.js'
+import { getItem } from '../../utils/storage.js'
 export default {
   name: 'Home',
   data () {
     return {
+      isPopupShow: false,
       active: 0,
       list: []
     }
@@ -28,12 +48,18 @@ export default {
   methods: {
     // 获取频道列表
     async getChannel () {
-      const result = await getChannels()
-      this.list = result.data.data.channels
+      const localStorage = getItem('userChannel')
+      if (localStorage) {
+        this.list = localStorage
+      } else {
+        const result = await getChannels()
+        this.list = result.data.data.channels
+      }
     }
   },
   components: {
-    Articleslist
+    Articleslist,
+    Channeledit
   },
   created () {
     this.getChannel()
@@ -65,6 +91,12 @@ export default {
     left:0;
     right: 0;
     z-index: 1;
+    .van-icon{
+      position: fixed;
+      right: 0;
+      line-height: 44px;
+      background-color: #fff;
+    }
   }
 }
 </style>
