@@ -10,6 +10,7 @@
         v-for="(item,index) in resultList"
         :key="index"
         :title="item.title"
+        @click="$router.push(`/article/${item.art_id}`)"
       />
     </van-list>
   </div>
@@ -45,6 +46,8 @@ export default {
       // 2、把数据给到列表中
       const results = data.data.results
       this.resultList.push(...results)
+      console.log(results)
+
       // 3、全部加载完成
       this.loading = false
       //   4、全部加载完成
