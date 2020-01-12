@@ -3,7 +3,7 @@
     <!-- 导航 -->
     <van-nav-bar fixed>
       <img src="../../assets/img/logo-light.png" slot="left" />
-      <van-icon name="search" slot="right" />
+      <van-icon @click="$router.push('/search')" name="search" slot="right" />
     </van-nav-bar>
     <!-- 频道列表 -->
     <van-tabs v-model="active">
@@ -94,6 +94,7 @@ export default {
     .van-icon{
       position: fixed;
       right: 0;
+      font-size: 20px;
       line-height: 44px;
       background-color: #fff;
     }

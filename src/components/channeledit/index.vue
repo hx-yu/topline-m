@@ -109,7 +109,7 @@ export default {
 
 <style scoped lang="less">
 .channel_edit {
-  padding: 40px 15px 0 15px;
+  padding: 40px 10px 0 10px;
   .close{
       position: absolute;
       top: -25px;
