@@ -1,21 +1,11 @@
 <template>
   <div class="article-container">
     <!-- 导航栏 -->
-    <van-nav-bar
-      title="文章详情"
-      left-arrow
-      fixed
-      @click-left="$router.back()"
-    ></van-nav-bar>
+    <van-nav-bar title="文章详情" left-arrow fixed @click-left="$router.back()"></van-nav-bar>
     <!-- /导航栏 -->
 
     <!-- 加载中 -->
-    <van-loading
-      class="loading"
-      color="#1989fa"
-      vertical
-      v-if="isLoadingShow"
-    >
+    <van-loading class="loading" color="#1989fa" vertical v-if="isLoadingShow">
       <slot>加载中...</slot>
     </van-loading>
     <!-- /加载中 -->
@@ -25,12 +15,7 @@
       <h3 class="title">{{details.title}}</h3>
       <div class="author-wrap">
         <div class="base-info">
-          <van-image
-            class="avatar"
-            round
-            fit="cover"
-            :src="details.aut_photo"
-          />
+          <van-image class="avatar" round fit="cover" :src="details.aut_photo" />
           <div class="text">
             <p class="name">{{details.aut_name}}</p>
             <p class="time">{{details.pubdate | transTime}}</p>
@@ -52,27 +37,19 @@
 
     <!-- 加载失败提示 -->
     <div class="error" v-else>
-      <img src="../../assets/img/no-network.png" alt="no-network">
+      <img src="../../assets/img/no-network.png" alt="no-network" />
       <p class="text">亲，网络不给力哦~</p>
-      <van-button
-        class="btn"
-        type="default"
-        size="small"
-      >点击重试</van-button>
+      <van-button class="btn" type="default" size="small">点击重试</van-button>
     </div>
     <!-- /加载失败提示 -->
 
     <!-- 评论列表 -->
-    <van-list
-    v-model="loading"
-    :finished="finished"
-    finished-text="人家也是有底线的"
-    @load="onLoad"
-    >
+    <van-list v-model="loading" :finished="finished" finished-text="人家也是有底线的" @load="onLoad">
       <ArticleComments
         :comment="item"
         v-for="(item,index) in list"
-        :key="index" :title="item.content"
+        :key="index"
+        :title="item.content"
       />
     </van-list>
     <!-- /评论列表 -->
@@ -84,14 +61,10 @@
         type="default"
         round
         size="small"
+        @click="isPostShow=true"
       >写评论</van-button>
-      <van-icon
-        class="comment-icon"
-        name="comment-o"
-        :info="totalCount"
-      />
-      <van-icon
-        color="orange"
+      <van-icon class="comment-icon" name="comment-o" :info="totalCount" />
+      <van-icon color="orange"
         :name="details.is_collected?'star':'star-o'"
         @click="onCollect"
       />
@@ -103,12 +76,23 @@
       <van-icon class="share-icon" name="share" />
     </div>
     <!-- /底部区域 -->
+    <van-popup
+      v-model="isPostShow"
+      position="bottom"
+    >
+      <PostComment
+        :articleId="articleId"
+        @addComment="sendComment"
+        @close="isPostShow=false"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { getComments } from '@/api/comment'
 import ArticleComments from '@/components/comment'
+import PostComment from '@/components/postcomment'
 import {
   getArticleDetails,
   addCollect,
@@ -134,13 +118,19 @@ export default {
       loading: false,
       finished: false,
       offset: null,
-      totalCount: null
+      totalCount: null,
+      isPostShow: false
     }
   },
   components: {
-    ArticleComments
+    ArticleComments,
+    PostComment
   },
   methods: {
+    sendComment (result) {
+      this.list.unshift(result)
+      this.totalCount++
+    },
     async onLoad () {
       const { data } = await getComments({
         type: 'a',
@@ -247,7 +237,7 @@ export default {
       margin: 0;
       padding-top: 24px;
       font-size: 20px;
-      color: #3A3A3A;
+      color: #3a3a3a;
     }
     .author-wrap {
       display: flex;
