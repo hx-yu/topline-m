@@ -22,3 +22,21 @@ export const getInfo = () => {
     method: 'GET'
   })
 }
+
+// 关注文章作者
+export const addFollow = userId => {
+  return request({
+    url: '/app/v1_0/user/followings',
+    method: 'POST',
+    data: {
+      target: userId
+    }
+  })
+}
+// 取消关注文章作者
+export const deleteFollow = userId => {
+  return request({
+    url: `/app/v1_0/user/followings/${userId}`,
+    method: 'DELETE'
+  })
+}

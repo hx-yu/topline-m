@@ -15,6 +15,9 @@ import './styles/index.less'
 // 引入验证组件
 import './utils/validation'
 
+// 引入时间格式化
+import './utils/moment'
+
 Vue.config.productionTip = false
 
 new Vue({
