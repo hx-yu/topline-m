@@ -16,3 +16,21 @@ export const addComment = data => {
     data
   })
 }
+
+// 文章评论点赞
+export const addLike = commentId => {
+  return request({
+    url: '/app/v1_0/comment/likings',
+    method: 'POST',
+    data: {
+      target: commentId
+    }
+  })
+}
+// 取消文章评论点赞
+export const deleteLike = commentId => {
+  return request({
+    url: `/app/v1_0/comment/likings/${commentId}`,
+    method: 'DELETE'
+  })
+}

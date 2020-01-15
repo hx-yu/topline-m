@@ -76,6 +76,8 @@
       <van-icon class="share-icon" name="share" />
     </div>
     <!-- /底部区域 -->
+
+    <!-- 发表评论 -->
     <van-popup
       v-model="isPostShow"
       position="bottom"
@@ -86,6 +88,7 @@
         @close="isPostShow=false"
       />
     </van-popup>
+    <!-- /发表评论 -->
   </div>
 </template>
 

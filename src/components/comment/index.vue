@@ -29,7 +29,11 @@
         >回复{{comment.reply_count}}</van-button>
       </p>
     </div>
-    <div slot="right-icon" class="like-container">
+    <div
+    slot="right-icon"
+    class="like-container"
+    @click="onLike"
+    >
       <van-icon
         :color="comment.is_liking ? '#e5645f' : ''"
         :name="comment.is_liking?'good-job':'good-job-o'"
@@ -40,6 +44,7 @@
 </template>
 
 <script>
+import { addLike, deleteLike } from '@/api/comment'
 export default {
   name: 'CommentList',
   data () {
@@ -53,6 +58,21 @@ export default {
     }
   },
   methods: {
+    async onLike () {
+      try {
+        if (this.comment.is_liking) {
+          await deleteLike(this.comment.com_id)
+          this.comment.like_count--
+        } else {
+          await addLike(this.comment.com_id)
+          this.comment.like_count++
+        }
+        this.comment.is_liking = !this.comment.is_liking
+      } catch (error) {
+        console.log(error)
+        this.$toast.fail('操作失败')
+      }
+    }
   }
 }
 </script>

@@ -33,7 +33,6 @@ export default {
           target: this.articleId,
           content: this.message
         })
-        console.log(data)
         const result = data.data.new_obj
         this.$emit('addComment', result)
         this.message = ''
