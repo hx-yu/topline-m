@@ -50,24 +50,16 @@
         v-for="(item,index) in list"
         :key="index"
         :title="item.content"
+        @open="onReply"
       />
     </van-list>
     <!-- /评论列表 -->
 
     <!-- 底部区域 -->
     <div class="footer">
-      <van-button
-        class="write-btn"
-        type="default"
-        round
-        size="small"
-        @click="isPostShow=true"
-      >写评论</van-button>
+      <van-button class="write-btn" type="default" round size="small" @click="isPostShow=true">写评论</van-button>
       <van-icon class="comment-icon" name="comment-o" :info="totalCount" />
-      <van-icon color="orange"
-        :name="details.is_collected?'star':'star-o'"
-        @click="onCollect"
-      />
+      <van-icon color="orange" :name="details.is_collected?'star':'star-o'" @click="onCollect" />
       <van-icon
         color="#e5645f"
         :name="details.attitude===1?'good-job':'good-job-o'"
@@ -78,10 +70,7 @@
     <!-- /底部区域 -->
 
     <!-- 发表评论 -->
-    <van-popup
-      v-model="isPostShow"
-      position="bottom"
-    >
+    <van-popup v-model="isPostShow" position="bottom">
       <PostComment
         :articleId="articleId"
         @addComment="sendComment"
@@ -89,6 +78,21 @@
       />
     </van-popup>
     <!-- /发表评论 -->
+
+    <!-- 评论回复 -->
+    <van-popup
+      v-model="isReplyShow"
+      position="bottom"
+      style="height: 95%"
+    >
+      <ReplyComment
+      v-if="isReplyShow"
+      :comment="currentComment"
+      :articleId="articleId"
+      @close="isReplyShow=false"
+      ></ReplyComment>
+    </van-popup>
+    <!-- /评论回复 -->
   </div>
 </template>
 
@@ -96,6 +100,7 @@
 import { getComments } from '@/api/comment'
 import ArticleComments from '@/components/comment'
 import PostComment from '@/components/postcomment'
+import ReplyComment from '@/components/replycomment'
 import {
   getArticleDetails,
   addCollect,
@@ -122,34 +127,45 @@ export default {
       finished: false,
       offset: null,
       totalCount: null,
-      isPostShow: false
+      isPostShow: false,
+      isReplyShow: false,
+      currentComment: {}
     }
   },
   components: {
     ArticleComments,
-    PostComment
+    PostComment,
+    ReplyComment
   },
   methods: {
+    onReply (comment) {
+      this.currentComment = comment
+      this.isReplyShow = true
+    },
     sendComment (result) {
       this.list.unshift(result)
       this.totalCount++
     },
     async onLoad () {
-      const { data } = await getComments({
-        type: 'a',
-        source: this.articleId,
-        offset: this.offset,
-        limit: 10
-      })
-      console.log(data)
-      const results = data.data.results
-      this.list.push(...results)
-      this.totalCount = data.data.total_count
-      this.loading = false
-      if (results.length) {
-        this.offset = data.data.last_id
-      } else {
-        this.finished = true
+      try {
+        const { data } = await getComments({
+          type: 'a',
+          source: this.articleId,
+          offset: this.offset,
+          limit: 10
+        })
+        const results = data.data.results
+        this.list.push(...results)
+        this.totalCount = data.data.total_count
+        this.loading = false
+        if (results.length) {
+          this.offset = data.data.last_id
+        } else {
+          this.finished = true
+        }
+      } catch (error) {
+        console.log(error)
+        this.$toast.fail('操作失败')
       }
     },
     async getArticle () {

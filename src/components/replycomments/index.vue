@@ -26,26 +26,31 @@ export default {
       message: ''
     }
   },
+  props: {
+    comment: {
+      type: Object,
+      required: true
+    },
+    articleId: {
+      type: [String, Array, Number, Object],
+      required: true
+    }
+  },
   methods: {
     async sendComment () {
       try {
         const { data } = await addComment({
-          target: this.articleId,
-          content: this.message
+          target: this.comment.com_id,
+          content: this.message,
+          art_id: this.articleId.toString()
         })
-        const result = data.data.new_obj
-        this.$emit('addComment', result)
+        const newobj = data.data.new_obj
+        this.$emit('reply', newobj)
         this.message = ''
-        this.$emit('close')
       } catch (error) {
         console.log(error)
+        this.$toast.fail('操作失败')
       }
-    }
-  },
-  props: {
-    articleId: {
-      type: [String, Array, Number, Object],
-      required: true
     }
   }
 }
