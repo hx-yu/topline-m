@@ -5,7 +5,11 @@
       <div class="info">
         <van-image round :src="user.photo" />
         <span>{{user.name}}</span>
-        <van-button round type="info">编辑资料</van-button>
+        <van-button
+          round
+          type="info"
+          @click="$router.push('/edituserprofile')"
+        >编辑资料</van-button>
       </div>
       <van-grid :border="false">
         <van-grid-item>

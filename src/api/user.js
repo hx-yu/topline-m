@@ -15,7 +15,7 @@ export const getCode = mobile => {
     method: 'GET'
   })
 }
-// 获取用户信息
+// 获取用户自己信息
 export const getInfo = () => {
   return request({
     url: '/app/v1_0/user',
@@ -38,5 +38,21 @@ export const deleteFollow = userId => {
   return request({
     url: `/app/v1_0/user/followings/${userId}`,
     method: 'DELETE'
+  })
+}
+
+// 获取用户个人资料
+export const getProfile = () => {
+  return request({
+    url: '/app/v1_0/user/profile',
+    method: 'GET'
+  })
+}
+// 编辑用户个人资料
+export const editProfile = data => {
+  return request({
+    url: '/app/v1_0/user/profile',
+    method: 'PATCH',
+    data
   })
 }
