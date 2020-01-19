@@ -45,7 +45,7 @@
     <van-cell-group class="sms">
       <van-cell title="消息通知" is-link />
       <van-cell title="实名认证" is-link />
-      <van-cell title="小智同学" is-link />
+      <van-cell title="小智同学" is-link @click="$router.push('/chat')" />
     </van-cell-group>
     <!-- 退出登录 -->
     <van-cell-group class="loginout" @click="logout">
