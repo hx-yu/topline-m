@@ -64,3 +64,27 @@ export const editPhoto = data => {
     data
   })
 }
+// 获取用户作品
+export const getCurrentUserArticle = params => {
+  return request({
+    url: '/app/v1_0/user/articles',
+    method: 'GET',
+    params
+  })
+}
+// 获取用户收藏
+export const getUserCollect = params => {
+  return request({
+    url: '/app/v1_0/article/collections',
+    method: 'GET',
+    params
+  })
+}
+// 获取用户关注
+export const getUserHistory = params => {
+  return request({
+    url: '/app/v1_0/user/histories',
+    method: 'GET',
+    params
+  })
+}

@@ -37,9 +37,9 @@
     </div>
     <!-- 收藏系列 -->
     <van-grid class="collect"  :border="false">
-      <van-grid-item icon="star-o" text="我的收藏" />
-      <van-grid-item icon="clock-o" text="浏览历史" />
-      <van-grid-item icon="edit" text="作品" />
+      <van-grid-item icon="star-o" text="我的收藏" to="/userarticle/collect"/>
+      <van-grid-item icon="clock-o" text="浏览历史" to="/userarticle/history"/>
+      <van-grid-item icon="edit" text="作品" to="/userarticle"/>
     </van-grid>
     <!-- 列表 -->
     <van-cell-group class="sms">
