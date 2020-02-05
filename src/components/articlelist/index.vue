@@ -1,8 +1,23 @@
 <template>
   <div>
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <van-cell v-for="(item,index) in list" :key="index" :title="item.title" />
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <van-cell
+        v-for="(item,index) in list"
+        :key="index"
+        :title="item.title"
+        @click="$router.push({
+          name:'Article',
+          params:{
+            articleId:item.art_id
+          }
+        })"
+        />
       </van-list>
     </van-pull-refresh>
   </div>

@@ -6,7 +6,7 @@
 
     <!-- 加载中 -->
     <van-loading class="loading" color="#1989fa" vertical v-if="isLoadingShow">
-      <slot>加载中...</slot>
+      <!-- <slot>加载中...</slot> -->
     </van-loading>
     <!-- /加载中 -->
 
@@ -44,7 +44,12 @@
     <!-- /加载失败提示 -->
 
     <!-- 评论列表 -->
-    <van-list v-model="loading" :finished="finished" finished-text="人家也是有底线的" @load="onLoad">
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      :finished-text="list.length?'人家也是有底线的':''"
+      @load="onLoad"
+    >
       <ArticleComments
         :comment="item"
         v-for="(item,index) in list"
@@ -57,9 +62,19 @@
 
     <!-- 底部区域 -->
     <div class="footer">
-      <van-button class="write-btn" type="default" round size="small" @click="isPostShow=true">写评论</van-button>
+      <van-button
+        class="write-btn"
+        type="default"
+        round
+        size="small"
+        @click="isPostShow=true"
+      >写评论</van-button>
       <van-icon class="comment-icon" name="comment-o" :info="totalCount" />
-      <van-icon color="orange" :name="details.is_collected?'star':'star-o'" @click="onCollect" />
+      <van-icon
+        color="orange"
+        :name="details.is_collected?'star':'star-o'"
+        @click="onCollect"
+      />
       <van-icon
         color="#e5645f"
         :name="details.attitude===1?'good-job':'good-job-o'"

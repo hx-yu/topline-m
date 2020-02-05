@@ -45,6 +45,14 @@ export default {
     UserCurrentArticle,
     UserCollect,
     UserHistory
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.name === 'Article') {
+      this.$store.commit('addKeepPages', 'UserArticle')
+    } else {
+      this.$store.commit('removeKeepPages', 'UserArticle')
+    }
+    next()
   }
 }
 </script>
