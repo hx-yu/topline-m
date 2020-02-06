@@ -85,7 +85,7 @@ export default {
         this.$toast.success('登陆成功')
         this.$store.commit('setUser', result.data.data)
         const redirect = this.$route.query.redirect || '/'
-        this.$router.push(redirect)
+        this.$router.replace(redirect)
       } catch (error) {
         this.$toast.fail('登陆失败')
       }
